@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	make mbr.bin util/bootloader_util
+	strip util/bootloader_util
+
+override_dh_auto_install:
+	install -D -m 644 mbr.bin $(CURDIR)/debian/gardenlinux-bootloader/etc/bootloader/mbr.bin
+	install -D -m 755 util/bootloader_util $(CURDIR)/debian/gardenlinux-bootloader/usr/sbin/bootloader_util
